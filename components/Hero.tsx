@@ -21,7 +21,7 @@ export default function Hero() {
       <div className="relative z-10 text-center container-fluid max-w-fluid mx-auto px-4 sm:px-6" style={{ paddingTop: 'clamp(5rem, 12vw, 8rem)', paddingBottom: 'clamp(2rem, 5vw, 4rem)' }}>
         {/* Main Heading */}
         <div className="mb-[clamp(1rem,3vw,1.5rem)] animate-fade-in" style={{ animationDelay: '0.2s' }}>
-          <h1 className="text-fluid-3xl sm:text-fluid-4xl md:text-fluid-5xl lg:text-fluid-6xl font-display font-light text-charcoal mb-[clamp(0.5rem,1vw,0.75rem)] leading-[0.95] tracking-tight px-2">
+          <h1 className="text-fluid-5xl sm:text-fluid-5xl md:text-fluid-6xl lg:text-fluid-7xl font-display font-light text-charcoal mb-[clamp(0.5rem,1vw,0.75rem)] leading-[0.95] tracking-tight px-2">
             Timeless
             <br />
             <span className="relative inline-block">
@@ -35,10 +35,10 @@ export default function Hero() {
 
         {/* Subtitle */}
         <div className="mb-[clamp(2rem,5vw,2.5rem)] animate-fade-in" style={{ animationDelay: '0.4s' }}>
-          <p className="text-fluid-sm sm:text-fluid-base md:text-fluid-lg text-charcoal/75 mb-[clamp(0.5rem,1.5vw,0.75rem)] font-light tracking-wide max-w-[clamp(18rem,55vw,40rem)] mx-auto leading-relaxed px-2">
+          <p className="text-fluid-base sm:text-fluid-lg md:text-fluid-xl text-charcoal/75 mb-[clamp(0.5rem,1.5vw,0.75rem)] font-light tracking-wide max-w-[clamp(18rem,55vw,40rem)] mx-auto leading-relaxed px-2">
             Classic & Casual Clothing for the Modern Wardrobe
           </p>
-          <p className="text-fluid-xs sm:text-fluid-sm text-charcoal/55 font-light tracking-wide max-w-[clamp(16rem,45vw,32rem)] mx-auto leading-relaxed px-2">
+          <p className="text-fluid-sm sm:text-fluid-base text-charcoal/55 font-light tracking-wide max-w-[clamp(16rem,45vw,32rem)] mx-auto leading-relaxed px-2">
             Discover timeless pieces that blend sophistication with everyday comfort
           </p>
         </div>
@@ -47,10 +47,10 @@ export default function Hero() {
         <div className="animate-fade-in px-4" style={{ animationDelay: '0.6s' }}>
           <Link
             href="/products"
-            className="inline-flex items-center gap-[clamp(0.375rem,0.8vw,0.5rem)] px-[clamp(1.25rem,3vw,2.5rem)] py-[clamp(0.75rem,1.8vw,0.875rem)] bg-charcoal text-white hover:bg-charcoal/90 hover:scale-105 active:scale-95 transition-all duration-300 font-light text-fluid-xs sm:text-fluid-sm tracking-wider uppercase border border-charcoal rounded-[20px] group shadow-lg hover:shadow-xl"
+            className="inline-flex items-center gap-[clamp(0.5rem,0.8vw,0.5rem)] px-[clamp(1.5rem,3vw,2.5rem)] py-[clamp(1rem,1.8vw,1rem)] bg-charcoal text-white hover:bg-charcoal/90 hover:scale-105 active:scale-95 transition-all duration-300 font-light text-fluid-sm sm:text-fluid-base tracking-wider uppercase border border-charcoal rounded-[20px] group shadow-lg hover:shadow-xl"
           >
             <span className="inline-block group-hover:translate-x-1 transition-transform duration-300">Explore Collection</span>
-            <svg className="w-[clamp(0.75rem,1.2vw,0.875rem)] h-[clamp(0.75rem,1.2vw,0.875rem)] group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-[clamp(1rem,1.2vw,1rem)] h-[clamp(1rem,1.2vw,1rem)] group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </Link>
