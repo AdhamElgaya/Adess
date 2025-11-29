@@ -11,9 +11,6 @@ export default function FeaturedProducts() {
           <h2 className="text-fluid-5xl md:text-fluid-6xl lg:text-fluid-7xl font-display font-light text-charcoal mb-[clamp(1.5rem, 4vw, 2rem)] tracking-tight">
             Featured <span className="bg-gradient-to-r from-charcoal via-charcoal/85 to-charcoal bg-clip-text text-transparent">Collection</span>
           </h2>
-          <p className="text-fluid-sm text-charcoal/60 max-w-[clamp(20rem, 50vw, 36rem)] mx-auto leading-relaxed font-light tracking-wide">
-            Handpicked pieces that define our commitment to quality and style
-          </p>
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style={{ gap: 'clamp(2rem, 5vw, 5rem)' }}>
