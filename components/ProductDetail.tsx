@@ -14,6 +14,86 @@ export default function ProductDetail({ product }: ProductDetailProps) {
   const [selectedImage, setSelectedImage] = useState(0)
   const [selectedSize, setSelectedSize] = useState<string | null>(null)
   const { addItem } = useCart()
+  const [isSharing, setIsSharing] = useState(false)
+  const [shareMessage, setShareMessage] = useState<string | null>(null)
+
+  const handleShare = async () => {
+    if (typeof window === 'undefined' || isSharing) return
+
+    const shareUrl = window.location.href
+    const shareText = `${product.name} · $${product.price}`
+
+    try {
+      setIsSharing(true)
+      setShareMessage(null)
+
+      // Try Web Share API first (works on mobile and some desktop browsers)
+      if (navigator.share && navigator.canShare && navigator.canShare({ title: product.name, text: shareText, url: shareUrl })) {
+        await navigator.share({
+          title: product.name,
+          text: shareText,
+          url: shareUrl,
+        })
+        setShareMessage('Shared successfully!')
+        setTimeout(() => setShareMessage(null), 3000)
+        return
+      }
+
+      // Fallback to clipboard API
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        try {
+          await navigator.clipboard.writeText(shareUrl)
+          setShareMessage('Link copied to clipboard!')
+          setTimeout(() => setShareMessage(null), 3000)
+        } catch (clipboardError) {
+          // Clipboard failed, show URL in a way user can copy manually
+          fallbackShare(shareUrl)
+        }
+      } else {
+        // No clipboard API, use fallback
+        fallbackShare(shareUrl)
+      }
+    } catch (error: any) {
+      // User cancelled share or other error
+      if (error?.name !== 'AbortError') {
+        // Only show error if it wasn't user cancellation
+        const shareUrl = window.location.href
+        fallbackShare(shareUrl)
+      }
+    } finally {
+      setIsSharing(false)
+    }
+  }
+
+  const fallbackShare = (url: string) => {
+    // Create a temporary textarea to copy from
+    const textarea = document.createElement('textarea')
+    textarea.value = url
+    textarea.style.position = 'fixed'
+    textarea.style.opacity = '0'
+    textarea.style.left = '-999999px'
+    document.body.appendChild(textarea)
+    textarea.select()
+    textarea.setSelectionRange(0, 99999) // For mobile devices
+    
+    try {
+      const successful = document.execCommand('copy')
+      if (successful) {
+        setShareMessage('Link copied to clipboard!')
+        setTimeout(() => setShareMessage(null), 3000)
+      } else {
+        // Last resort: show the URL
+        setShareMessage(`Share this link: ${url}`)
+        setTimeout(() => setShareMessage(null), 5000)
+      }
+    } catch (err) {
+      // Show the URL as last resort
+      setShareMessage(`Share this link: ${url}`)
+      setTimeout(() => setShareMessage(null), 5000)
+    } finally {
+      document.body.removeChild(textarea)
+    }
+  }
 
   const sizes = ['XS', 'S', 'M', 'L', 'XL']
 
@@ -117,11 +197,22 @@ export default function ProductDetail({ product }: ProductDetailProps) {
                 <FiHeart className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-300 group-hover:scale-110" />
                 Save
               </button>
-              <button className="group flex-1 py-3 sm:py-4 border border-charcoal/12 bg-stone text-charcoal/65 hover:bg-beige-100 hover:border-charcoal/25 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 font-light text-fluid-xs tracking-wider uppercase flex items-center justify-center gap-2 rounded-[20px] backdrop-blur-sm">
+              <button
+                className="group flex-1 py-3 sm:py-4 border border-charcoal/12 bg-stone text-charcoal/65 hover:bg-beige-100 hover:border-charcoal/25 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 font-light text-fluid-xs tracking-wider uppercase flex items-center justify-center gap-2 rounded-[20px] backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                onClick={handleShare}
+                disabled={isSharing}
+              >
                 <FiShare2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-300 group-hover:scale-110" />
-                Share
+                {isSharing ? 'Sharing…' : 'Share'}
               </button>
             </div>
+            {shareMessage && (
+              <div className="mt-3 animate-fade-in">
+                <p className="text-fluid-xs text-charcoal/70 bg-beige-100 border border-charcoal/10 rounded-[20px] px-4 py-2 inline-block">
+                  {shareMessage}
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Product Details */}
