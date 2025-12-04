@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Product } from '@/lib/products'
 import { FiArrowLeft, FiHeart, FiShare2 } from 'react-icons/fi'
+import { useCart } from '@/components/CartProvider'
 
 interface ProductDetailProps {
   product: Product
@@ -12,6 +13,7 @@ interface ProductDetailProps {
 export default function ProductDetail({ product }: ProductDetailProps) {
   const [selectedImage, setSelectedImage] = useState(0)
   const [selectedSize, setSelectedSize] = useState<string | null>(null)
+  const { addItem } = useCart()
 
   const sizes = ['XS', 'S', 'M', 'L', 'XL']
 
@@ -100,8 +102,15 @@ export default function ProductDetail({ product }: ProductDetailProps) {
 
           {/* Actions */}
           <div className="space-y-3 sm:space-y-4 mb-12 sm:mb-16">
-            <button className="w-full py-3 sm:py-4 bg-charcoal text-stone hover:bg-charcoal/90 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 font-light text-fluid-xs sm:text-fluid-sm tracking-wider uppercase border border-charcoal rounded-[20px] shadow-lg hover:shadow-xl">
-              Add to Cart
+            <button
+              className="w-full py-3 sm:py-4 bg-charcoal text-stone hover:bg-charcoal/90 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 font-light text-fluid-xs sm:text-fluid-sm tracking-wider uppercase border border-charcoal rounded-[20px] shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={!selectedSize}
+              onClick={() => {
+                if (!selectedSize) return
+                addItem(product, { size: selectedSize })
+              }}
+            >
+              {selectedSize ? 'Add to Cart' : 'Select Size to Add to Cart'}
             </button>
             <div className="flex gap-3 sm:gap-4">
               <button className="group flex-1 py-3 sm:py-4 border border-charcoal/12 bg-stone text-charcoal/65 hover:bg-beige-100 hover:border-charcoal/25 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 font-light text-fluid-xs tracking-wider uppercase flex items-center justify-center gap-2 rounded-[20px] backdrop-blur-sm">
